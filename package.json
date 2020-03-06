@@ -1,0 +1,42 @@
+{
+  "name": "QaRtinka",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env PORT=10888 react-scripts start",
+    "build": "react-scripts build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "react-hot-loader": "^4.9.0",
+    "react-scripts": "^3.4.0"
+  },
+  "dependencies": {
+    "@vkontakte/icons": "^1.16.3",
+    "@vkontakte/vk-bridge": "^2.0.8",
+    "@vkontakte/vkui": "^3.4.0",
+    "babel-eslint": "^10.0.3",
+    "chalk": "^2.4.2",
+    "core-js": "^3.1.4",
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0",
+    "react-awesome-qr": "^1.1.0",
+    "react-dom": "^16.9.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
