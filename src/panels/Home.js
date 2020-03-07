@@ -33,7 +33,7 @@ class Home extends React.Component {
 				correctLevel: 3,
 				size: 1000,
 				dotScale: 0.4,
-			}
+			},
 		};
 	}
 	
@@ -48,7 +48,9 @@ class Home extends React.Component {
 		};
 		
 		const updateImage = (img) => {
-			this.setState({qrImageNew: img});
+			if (qrImageNew !== img) {
+				this.setState({qrImageNew: img});
+			}
 		};
 		
 		const uploadFile = (e) => {
@@ -75,7 +77,9 @@ class Home extends React.Component {
 					QR код из картинки
 				</PanelHeader>
 				
-				<Input type="text" defaultValue={qrText} onChange={changeText}/>
+				<Div>
+					<Input type="text" defaultValue={qrText} onChange={changeText}/>
+				</Div>
 				
 				<Div className="qrBlock">
 					<Div className="picture">
