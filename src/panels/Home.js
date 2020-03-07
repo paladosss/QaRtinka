@@ -8,18 +8,11 @@ import Button from '@vkontakte/vkui/dist/components/Button/Button';
 import Div from '@vkontakte/vkui/dist/components/Div/Div';
 import File from '@vkontakte/vkui/dist/components/File/File';
 import Input from '@vkontakte/vkui/dist/components/Input/Input';
-import {platform, IOS} from '@vkontakte/vkui';
-import PanelHeaderButton
-	from '@vkontakte/vkui/dist/components/PanelHeaderButton/PanelHeaderButton';
-import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
-import Icon24Back from '@vkontakte/icons/dist/24/back';
 import Icon24Camera from '@vkontakte/icons/dist/24/camera';
 import ReactQr from 'react-awesome-qr';
 import './Home.css'
 
 const jobs = require('../img/jobs.jpg');
-
-const osName = platform();
 const db = require('just-debounce');
 const FileSaver = require('file-saver');
 
@@ -94,9 +87,6 @@ class Home extends React.Component {
 		return (
 			<Panel id={id} className="Home">
 				<PanelHeader
-					left={<PanelHeaderButton onClick={go} data-to="home">
-						{osName === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
-					</PanelHeaderButton>}
 				>
 					QR код из картинки
 				</PanelHeader>
