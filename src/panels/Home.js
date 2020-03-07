@@ -6,63 +6,113 @@ import PanelHeader
 	from '@vkontakte/vkui/dist/components/PanelHeader/PanelHeader';
 import Button from '@vkontakte/vkui/dist/components/Button/Button';
 import Div from '@vkontakte/vkui/dist/components/Div/Div';
+import File from '@vkontakte/vkui/dist/components/File/File';
+import Input from '@vkontakte/vkui/dist/components/Input/Input';
 import {platform, IOS} from '@vkontakte/vkui';
 import PanelHeaderButton
 	from '@vkontakte/vkui/dist/components/PanelHeaderButton/PanelHeaderButton';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
+import Icon24Camera from '@vkontakte/icons/dist/24/camera';
 import ReactQr from 'react-awesome-qr';
 import './Home.css'
 
 const osName = platform();
+const debounce = require('debounce');
 const FileSaver = require('file-saver');
 
-const Home = ({id, go, fetchedUser}) => {
-	let qrImage;
-	const qrParams = fetchedUser && {
-		text: `${fetchedUser.first_name} ${fetchedUser.last_name} - лучший человек!`,
-		correctLevel: 3,
-		size: 1000,
-		dotScale: 0.4,
-		callback: (data) => {
-			qrImage = data;
-		}
-	};
+class Home extends React.Component {
+	constructor(props) {
+		super(props);
+		
+		this.state = {
+			qrImage: 'https://static.vecteezy.com/system/resources/previews/000/074/969/non_2x/steve-jobs-vector.jpg',
+			qrImageNew: '',
+			qrParams: {
+				text: 'https://vk.com/paladosss',
+				correctLevel: 3,
+				size: 1000,
+				dotScale: 0.4,
+			}
+		};
+	}
 	
-	const downloadImage = () => {
-		FileSaver.saveAs(qrImage, "qr.png");
-	};
-	
-	return fetchedUser && (
-		<Panel id={id} className="Home">
-			<PanelHeader
-				left={<PanelHeaderButton onClick={go} data-to="home">
-					{osName === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
-				</PanelHeaderButton>}
-			>
-				QR код из картинки
-			</PanelHeader>
+	render() {
+		const {id, go} = this.props;
+		let {qrImage, qrImageNew, qrParams} = this.state;
+		
+		const updateImage = (img) => {
+			this.setState({qrImageNew: img});
+		};
+		
+		const uploadFile = (e) => {
+			let reader = new FileReader();
 			
-			<Div className="qrBlock">
-				<Div className="avatar">
-					<img className="avatarImg" src={fetchedUser.photo_max_orig}
-					     alt="avatar"/>
-				</Div>
-				<Div className="qr">
-					<ReactQr className="qrImg"
-					         bgSrc={fetchedUser.photo_200} {...qrParams} />
-				</Div>
-			</Div>
+			reader.onloadend = () => {
+				this.setState({qrImage: reader.result})
+			};
 			
-			<Div className="downloadButton">
-				<Button size="m" level="2" onClick={downloadImage} data-to="qr">
-					Скачать QR-код
-				</Button>
-			</Div>
-		</Panel>
-	)
-};
-
+			reader.readAsDataURL(e.target.files[0]);
+		};
+		
+		const downloadImage = () => {
+			FileSaver.saveAs(qrImageNew, "qr.png");
+		};
+		
+		const changeText = (e) => {
+			const text = e.target.value;
+			
+			debounce(this.setState(state => {
+				const qrParamsNew = {...state.qrParams};
+				
+				qrParamsNew.text = text;
+				
+				return ({qrParams: qrParamsNew})
+			}), 200)
+		};
+		
+		return (
+			<Panel id={id} className="Home">
+				<PanelHeader
+					left={<PanelHeaderButton onClick={go} data-to="home">
+						{osName === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
+					</PanelHeaderButton>}
+				>
+					QR код из картинки
+				</PanelHeader>
+				
+				<Input type="text" defaultValue={qrParams.text} onChange={changeText}/>
+				
+				<Div className="qrBlock">
+					<Div className="picture">
+						<img className="pictureImg" src={qrImage}
+						     alt="picture"/>
+					</Div>
+					<Div className="qr">
+						<ReactQr className="qrImg"
+						         bgSrc={qrImage}
+						         callback={(img) => updateImage(img)}
+						         {...qrParams}
+						/>
+					</Div>
+				</Div>
+				
+				<Div className="downloadButton">
+					<File top="Загрузите ваше изображение" before={<Icon24Camera/>}
+					      size="l" onChange={uploadFile}>
+						Открыть галерею
+					</File>
+				</Div>
+				
+				<Div className="downloadButton">
+					<Button size="m" level="2" onClick={downloadImage}>
+						Скачать QR-код
+					</Button>
+				</Div>
+			</Panel>
+		)
+	}
+}
 
 Home.propTypes = {
 	id: PropTypes.string.isRequired,
