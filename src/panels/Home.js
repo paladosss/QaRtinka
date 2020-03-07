@@ -9,6 +9,7 @@ import Div from '@vkontakte/vkui/dist/components/Div/Div';
 import File from '@vkontakte/vkui/dist/components/File/File';
 import Input from '@vkontakte/vkui/dist/components/Input/Input';
 import Icon24Camera from '@vkontakte/icons/dist/24/camera';
+import Icon24Document from '@vkontakte/icons/dist/24/document';
 import ReactQr from 'react-awesome-qr';
 import './Home.css'
 
@@ -24,7 +25,7 @@ class Home extends React.Component {
 			qrImage: jobs,
 			qrImageNew: '',
 			qrParams: {
-				text: 'https://vk.com/coin#t34158861',
+				text: 'https://vk.com/vkpay#action=transfer-to-user&user_id=34158861&from_qr=1',
 				correctLevel: 3,
 				dotScale: 0.4,
 				size: 1000,
@@ -47,7 +48,7 @@ class Home extends React.Component {
 	}
 	
 	render() {
-		const {id, go} = this.props;
+		const {id} = this.props;
 		let {qrImage, qrImageNew, qrParams} = this.state;
 		const {text} = qrParams;
 		
@@ -119,14 +120,17 @@ class Home extends React.Component {
 				<Div className="downloadButton">
 					<File top="Загрузите ваше изображение" before={<Icon24Camera/>}
 					      size="l" onChange={uploadFile}>
-						Открыть галерею
+						Загрузить своё изображение
 					</File>
 				</Div>
 				
 				<Div className="downloadButton">
-					<Button size="m" level="2" onClick={downloadImage}>
+					<Button size="m" level="2" onClick={downloadImage} before={<Icon24Document/>}>
 						Скачать QR-код
 					</Button>
+					{/*<Div>*/}
+					{/*	<a href={qrImageNew} target="_blank" download>Прямая ссылка</a>*/}
+					{/*</Div>*/}
 				</Div>
 			</Panel>
 		)
