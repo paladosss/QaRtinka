@@ -15,10 +15,10 @@ import ReactQr from 'react-awesome-qr';
 import './Home.css'
 
 const osName = platform();
-const download = require('downloadjs');
+const FileSaver = require('file-saver');
 
 const Home = ({id, go, fetchedUser}) => {
-	let qrImage = '';
+	let qrImage;
 	const qrParams = fetchedUser && {
 		text: `${fetchedUser.first_name} ${fetchedUser.last_name} - лучший человек!`,
 		correctLevel: 3,
@@ -30,7 +30,7 @@ const Home = ({id, go, fetchedUser}) => {
 	};
 	
 	const downloadImage = () => {
-		download(qrImage, "qr.png", "image/png");
+		FileSaver.saveAs(qrImage, "qr.png");
 	};
 	
 	return fetchedUser && (
@@ -62,6 +62,7 @@ const Home = ({id, go, fetchedUser}) => {
 		</Panel>
 	)
 };
+
 
 Home.propTypes = {
 	id: PropTypes.string.isRequired,
