@@ -5,13 +5,12 @@ import ScreenSpinner from '@vkontakte/vkui/dist/components/ScreenSpinner/ScreenS
 import '@vkontakte/vkui/dist/vkui.css';
 
 import Home from './panels/Home';
-import Persik from './panels/Persik';
 
 const App = () => {
 	const [activePanel, setActivePanel] = useState('home');
 	const [fetchedUser, setUser] = useState(null);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
-
+	
 	useEffect(() => {
 		bridge.subscribe(({ detail: { type, data }}) => {
 			if (type === 'VKWebAppUpdateConfig') {
@@ -35,10 +34,9 @@ const App = () => {
 	return (
 		<View activePanel={activePanel} popout={popout}>
 			<Home id='home' fetchedUser={fetchedUser} go={go} />
-			<Persik id='persik' go={go} />
 		</View>
 	);
-}
+};
 
 export default App;
 
