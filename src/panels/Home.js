@@ -28,7 +28,7 @@ class Home extends React.Component {
 		this.state = {
 			qrImage: 'https://static.vecteezy.com/system/resources/previews/000/074/969/non_2x/steve-jobs-vector.jpg',
 			qrImageNew: '',
-			qrText: 'https://vk.com/paladosss',
+			qrText: 'https://vk.com/coin#t34158861',
 			qrParams: {
 				correctLevel: 3,
 				size: 1000,
