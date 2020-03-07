@@ -11,15 +11,14 @@ import PanelHeaderButton
 	from '@vkontakte/vkui/dist/components/PanelHeaderButton/PanelHeaderButton';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
-
 import ReactQr from 'react-awesome-qr';
-
 import './Home.css'
 
 const osName = platform();
+const download = require('downloadjs');
 
 const Home = ({id, go, fetchedUser}) => {
-	let qrImage;
+	let qrImage = '';
 	const qrParams = fetchedUser && {
 		text: `${fetchedUser.first_name} ${fetchedUser.last_name} - лучший человек!`,
 		correctLevel: 3,
@@ -30,13 +29,8 @@ const Home = ({id, go, fetchedUser}) => {
 		}
 	};
 	
-	const download = () => {
-		console.log(qrImage);
-		
-		const a = document.createElement("a");
-		a.href = qrImage;
-		a.download = "qr.png";
-		a.click();
+	const downloadImage = () => {
+		download(qrImage, "qr.png", "image/png");
 	};
 	
 	return fetchedUser && (
@@ -51,15 +45,17 @@ const Home = ({id, go, fetchedUser}) => {
 			
 			<Div className="qrBlock">
 				<Div className="avatar">
-					<img className="avatarImg" src={fetchedUser.photo_max_orig} alt="avatar"/>
+					<img className="avatarImg" src={fetchedUser.photo_max_orig}
+					     alt="avatar"/>
 				</Div>
 				<Div className="qr">
-					<ReactQr className="qrImg" bgSrc={fetchedUser.photo_200} {...qrParams} />
+					<ReactQr className="qrImg"
+					         bgSrc={fetchedUser.photo_200} {...qrParams} />
 				</Div>
 			</Div>
 			
 			<Div className="downloadButton">
-				<Button size="m" level="2" onClick={download} data-to="qr">
+				<Button size="m" level="2" onClick={downloadImage} data-to="qr">
 					Скачать QR-код
 				</Button>
 			</Div>

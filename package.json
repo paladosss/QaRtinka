@@ -26,6 +26,8 @@
     "babel-eslint": "^10.0.3",
     "chalk": "^2.4.2",
     "core-js": "^3.1.4",
+    "downloadjs": "^1.4.7",
+    "js-base64": "^2.5.2",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-awesome-qr": "^1.1.0",
