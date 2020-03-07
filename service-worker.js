@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/QaRtinka/precache-manifest.db7112b31767607dce57c25a328dfdf2.js"
+  "/QaRtinka/precache-manifest.b158179248d2be6b68e23889be0105f3.js"
 );
 
 self.addEventListener('message', (event) => {
