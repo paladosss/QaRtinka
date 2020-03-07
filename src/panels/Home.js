@@ -28,8 +28,8 @@ class Home extends React.Component {
 		this.state = {
 			qrImage: 'https://static.vecteezy.com/system/resources/previews/000/074/969/non_2x/steve-jobs-vector.jpg',
 			qrImageNew: '',
+			qrText: 'https://vk.com/paladosss',
 			qrParams: {
-				text: 'https://vk.com/paladosss',
 				correctLevel: 3,
 				size: 1000,
 				dotScale: 0.4,
@@ -39,7 +39,13 @@ class Home extends React.Component {
 	
 	render() {
 		const {id, go} = this.props;
-		let {qrImage, qrImageNew, qrParams} = this.state;
+		let {qrImage, qrImageNew, qrParams, qrText} = this.state;
+		
+		const changeText = (e) => {
+			const text = e.target.value;
+			
+			debounce(this.setState({qrText: text}), 200);
+		};
 		
 		const updateImage = (img) => {
 			this.setState({qrImageNew: img});
@@ -59,18 +65,6 @@ class Home extends React.Component {
 			FileSaver.saveAs(qrImageNew, "qr.png");
 		};
 		
-		const changeText = (e) => {
-			const text = e.target.value;
-			
-			debounce(this.setState(state => {
-				const qrParamsNew = {...state.qrParams};
-				
-				qrParamsNew.text = text;
-				
-				return ({qrParams: qrParamsNew})
-			}), 200)
-		};
-		
 		return (
 			<Panel id={id} className="Home">
 				<PanelHeader
@@ -81,7 +75,7 @@ class Home extends React.Component {
 					QR код из картинки
 				</PanelHeader>
 				
-				<Input type="text" defaultValue={qrParams.text} onChange={changeText}/>
+				<Input type="text" defaultValue={qrText} onChange={changeText}/>
 				
 				<Div className="qrBlock">
 					<Div className="picture">
@@ -90,6 +84,7 @@ class Home extends React.Component {
 					</Div>
 					<Div className="qr">
 						<ReactQr className="qrImg"
+						         text={qrText}
 						         bgSrc={qrImage}
 						         callback={(img) => updateImage(img)}
 						         {...qrParams}
