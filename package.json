@@ -28,6 +28,7 @@
     "core-js": "^3.1.4",
     "debounce": "^1.2.0",
     "file-saver": "^2.0.2",
+    "just-debounce": "^1.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-awesome-qr": "^1.1.0",

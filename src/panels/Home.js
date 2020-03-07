@@ -17,8 +17,10 @@ import Icon24Camera from '@vkontakte/icons/dist/24/camera';
 import ReactQr from 'react-awesome-qr';
 import './Home.css'
 
+const jobs = require('../img/jobs.jpg');
+
 const osName = platform();
-const debounce = require('debounce');
+const db = require('just-debounce');
 const FileSaver = require('file-saver');
 
 class Home extends React.Component {
@@ -26,30 +28,51 @@ class Home extends React.Component {
 		super(props);
 		
 		this.state = {
-			qrImage: 'https://static.vecteezy.com/system/resources/previews/000/074/969/non_2x/steve-jobs-vector.jpg',
+			qrImage: jobs,
 			qrImageNew: '',
-			qrText: 'https://vk.com/coin#t34158861',
 			qrParams: {
+				text: 'https://vk.com/coin#t34158861',
 				correctLevel: 3,
-				size: 1000,
 				dotScale: 0.4,
+				size: 1000,
+				margin: 20,
+				whiteMargin: true,
+				colorDark: "#000000",
+				colorLight: "#ffffff",
+				autoColor: true,
+				maskedDots: false,
+				backgroundDimming: 'rgba(0,0,0,0)',
+				gifBackground: undefined,
+				logoImage: undefined,
+				logoScale: 0.2,
+				logoMargin: 6,
+				logoCornerRadius: 8,
+				binarize: false,
+				binarizeThreshold: 128,
 			},
 		};
 	}
 	
 	render() {
 		const {id, go} = this.props;
-		let {qrImage, qrImageNew, qrParams, qrText} = this.state;
+		let {qrImage, qrImageNew, qrParams} = this.state;
+		const {text} = qrParams;
 		
-		const changeText = (e) => {
-			const text = e.target.value;
+		const changeParams = (e, key) => {
+			const value = e.target.value;
 			
-			debounce(this.setState({qrText: text}), 200);
+			db(this.setState(state => {
+				const qrParams = {...state.qrParams};
+				
+				qrParams[key] = value;
+				
+				return {qrParams};
+			}), 1000);
 		};
 		
 		const updateImage = (img) => {
 			if (qrImageNew !== img) {
-				this.setState({qrImageNew: img});
+				db(this.setState({qrImageNew: img}), 1000);
 			}
 		};
 		
@@ -57,7 +80,7 @@ class Home extends React.Component {
 			let reader = new FileReader();
 			
 			reader.onloadend = () => {
-				this.setState({qrImage: reader.result})
+				db(this.setState({qrImage: reader.result}), 1000);
 			};
 			
 			reader.readAsDataURL(e.target.files[0]);
@@ -66,6 +89,7 @@ class Home extends React.Component {
 		const downloadImage = () => {
 			FileSaver.saveAs(qrImageNew, "qr.png");
 		};
+		
 		
 		return (
 			<Panel id={id} className="Home">
@@ -78,7 +102,14 @@ class Home extends React.Component {
 				</PanelHeader>
 				
 				<Div>
-					<Input type="text" defaultValue={qrText} onChange={changeText}/>
+					<div className="inputLabel">Введите текст, который будет зашифрован в
+						QR-коде
+					</div>
+					<Input type="text" defaultValue={text}
+					       onChange={(e) => changeParams(e, 'text')}
+					       placeholder="Введите текст, который будет зашифрован в QR-коде"
+					       align="center"
+					/>
 				</Div>
 				
 				<Div className="qrBlock">
@@ -88,9 +119,8 @@ class Home extends React.Component {
 					</Div>
 					<Div className="qr">
 						<ReactQr className="qrImg"
-						         text={qrText}
 						         bgSrc={qrImage}
-						         callback={(img) => updateImage(img)}
+						         callback={img => updateImage(img)}
 						         {...qrParams}
 						/>
 					</Div>
