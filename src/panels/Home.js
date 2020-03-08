@@ -25,7 +25,7 @@ class Home extends React.Component {
 			qrImage: jobs,
 			qrImageNew: '',
 			qrParams: {
-				text: 'https://vk.com/vkpay#action=transfer-to-user&user_id=34158861&from_qr=1',
+				text: `Steven Paul «Steve» Jobs - Apple`,
 				correctLevel: 3,
 				dotScale: 0.4,
 				size: 1000,
@@ -53,9 +53,14 @@ class Home extends React.Component {
 		const {text} = qrParams;
 		
 		const changeParams = (e, key) => {
-			const value = e.target.value;
+			let value;
+			if (e.target) {
+				value = e.target.value;
+			} else if (e) {
+				value = e;
+			}
 			
-			db(this.setState(state => {
+			value && db(this.setState(state => {
 				const qrParams = {...state.qrParams};
 				
 				qrParams[key] = value;
@@ -84,6 +89,11 @@ class Home extends React.Component {
 			FileSaver.saveAs(qrImageNew, "qr.png");
 		};
 		
+		const donation = () => {
+			const donationLink = 'https://vk.com/vkpay#action=transfer-to-user&user_id=34158861&from_qr=1';
+			
+			changeParams(donationLink, 'text');
+		};
 		
 		return (
 			<Panel id={id} className="Home">
@@ -96,7 +106,7 @@ class Home extends React.Component {
 					<div className="inputLabel">Введите текст, который будет зашифрован в
 						QR-коде
 					</div>
-					<Input type="text" defaultValue={text}
+					<Input type="text" value={text}
 					       onChange={(e) => changeParams(e, 'text')}
 					       placeholder="Введите текст, который будет зашифрован в QR-коде"
 					       align="center"
@@ -125,12 +135,15 @@ class Home extends React.Component {
 				</Div>
 				
 				<Div className="downloadButton">
-					<Button size="m" level="2" onClick={downloadImage} before={<Icon24Document/>}>
+					<Button size="m" level="2" onClick={downloadImage}
+					        before={<Icon24Document/>}>
 						Скачать QR-код
 					</Button>
-					{/*<Div>*/}
-					{/*	<a href={qrImageNew} target="_blank" download>Прямая ссылка</a>*/}
-					{/*</Div>*/}
+				</Div>
+				<Div className="downloadButton">
+					<Button size="m" level="2" onClick={donation}>
+						Ссылочка на донат
+					</Button>
 				</Div>
 			</Panel>
 		)
