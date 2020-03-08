@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f25c8f743dc8ab191d9f0f5b613207d8",
+    "revision": "22e7e34da704b0cf36ecfd29b64e8537",
     "url": "/QaRtinka/index.html"
   },
   {
