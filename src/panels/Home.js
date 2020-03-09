@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import bridge from '@vkontakte/vk-bridge';
 import Panel from '@vkontakte/vkui/dist/components/Panel/Panel';
 import PanelHeader
 	from '@vkontakte/vkui/dist/components/PanelHeader/PanelHeader';
@@ -15,7 +16,7 @@ import './Home.css'
 
 const jobs = require('../img/jobs.jpg');
 const db = require('just-debounce');
-const FileSaver = require('file-saver');
+// const FileSaver = require('file-saver');
 
 class Home extends React.Component {
 	constructor(props) {
@@ -86,7 +87,16 @@ class Home extends React.Component {
 		};
 		
 		const downloadImage = () => {
-			FileSaver.saveAs(qrImageNew, "qr.png");
+			bridge.send("VKWebAppShowStoryBox", {
+				"background_type": "image",
+				"blob": "data:image/png;base64,<blob-base64>" + qrImageNew,
+			});
+			
+			// FileSaver.saveAs(qrImageNew, "qr.png", {autoBom: true});
+		};
+		
+		const openCodeReader = () => {
+			bridge.send("VKWebAppOpenCodeReader", {});
 		};
 		
 		const donation = () => {
@@ -132,6 +142,12 @@ class Home extends React.Component {
 					      size="l" onChange={uploadFile}>
 						Загрузить своё изображение
 					</File>
+				</Div>
+				<Div className="downloadButton">
+					<Button size="m" level="2" onClick={openCodeReader}>
+						Сканировать QR-код
+					</Button>
+				
 				</Div>
 				
 				<Div className="downloadButton">
