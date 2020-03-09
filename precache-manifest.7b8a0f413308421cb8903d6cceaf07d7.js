@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "46481790c133d3b06207dd900ccffc44",
+    "revision": "47f7e8cbc225cc62937bbb41d59e5f95",
     "url": "/QaRtinka/index.html"
   },
   {
-    "revision": "9f73833643bdbbc498d4",
+    "revision": "6f9cb54dd1e123c1ef14",
     "url": "/QaRtinka/static/css/2.3e9c613c.chunk.css"
   },
   {
-    "revision": "20d05ad4bb5bd23c0420",
+    "revision": "ec3da8b457ef42b7f077",
     "url": "/QaRtinka/static/css/main.237db0f6.chunk.css"
   },
   {
-    "revision": "9f73833643bdbbc498d4",
-    "url": "/QaRtinka/static/js/2.8517f4d1.chunk.js"
+    "revision": "6f9cb54dd1e123c1ef14",
+    "url": "/QaRtinka/static/js/2.85c4a267.chunk.js"
   },
   {
     "revision": "21ced859ea2b2d6b856d461ad6c2afed",
-    "url": "/QaRtinka/static/js/2.8517f4d1.chunk.js.LICENSE.txt"
+    "url": "/QaRtinka/static/js/2.85c4a267.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "20d05ad4bb5bd23c0420",
-    "url": "/QaRtinka/static/js/main.538ff3b2.chunk.js"
+    "revision": "ec3da8b457ef42b7f077",
+    "url": "/QaRtinka/static/js/main.ab8d3fbf.chunk.js"
   },
   {
     "revision": "b96f868fddacd7f9154b",
