@@ -1,7 +1,7 @@
 {
   "name": "QaRtinka",
   "version": "1.0.0",
-  "description": "",
+  "description": "Image to QR",
   "homepage": "https://paladosss.github.io/QaRtinka/",
   "main": "index.js",
   "scripts": {
@@ -10,8 +10,8 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["QR","Image","Picture","QR to Image"],
+  "author": "Paladosss",
   "license": "MIT",
   "devDependencies": {
     "cross-env": "^5.2.0",
