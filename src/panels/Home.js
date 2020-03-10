@@ -2,20 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import bridge from '@vkontakte/vk-bridge';
+import {platform, IOS} from '@vkontakte/vkui';
 import Panel from '@vkontakte/vkui/dist/components/Panel/Panel';
 import PanelHeader
 	from '@vkontakte/vkui/dist/components/PanelHeader/PanelHeader';
 import Button from '@vkontakte/vkui/dist/components/Button/Button';
 import Div from '@vkontakte/vkui/dist/components/Div/Div';
 import File from '@vkontakte/vkui/dist/components/File/File';
-import Input from '@vkontakte/vkui/dist/components/Input/Input';
+import Textarea from '@vkontakte/vkui/dist/components/Textarea/Textarea';
 import Icon24Camera from '@vkontakte/icons/dist/24/camera';
 import Icon24Document from '@vkontakte/icons/dist/24/document';
 import ReactQr from 'react-awesome-qr';
 import './Home.css'
 
+const osName = platform();
 const jobs = require('../img/jobs.jpg');
 const db = require('just-debounce');
+
 // const FileSaver = require('file-saver');
 
 class Home extends React.Component {
@@ -56,12 +59,13 @@ class Home extends React.Component {
 		const changeParams = (e, key) => {
 			let value;
 			if (e.target) {
-				value = e.target.value;
+				const newValue = e.target.value;
+				value = newValue.length ? newValue : '';
 			} else if (e) {
 				value = e;
 			}
 			
-			value && db(this.setState(state => {
+			db(this.setState(state => {
 				const qrParams = {...state.qrParams};
 				
 				qrParams[key] = value;
@@ -113,13 +117,12 @@ class Home extends React.Component {
 				</PanelHeader>
 				
 				<Div>
-					<div className="inputLabel">Введите текст, который будет зашифрован в
-						QR-коде
-					</div>
-					<Input type="text" value={text}
-					       onChange={(e) => changeParams(e, 'text')}
-					       placeholder="Введите текст, который будет зашифрован в QR-коде"
-					       align="center"
+					<Textarea type="text"
+					          top="Введите текст, который будет зашифрован в QR-коде"
+					          placeholder="Введите текст, который будет зашифрован в QR-коде"
+					          value={text}
+					          onChange={(e) => changeParams(e, 'text')}
+					          rows={1}
 					/>
 				</Div>
 				
@@ -156,11 +159,12 @@ class Home extends React.Component {
 						Скачать QR-код
 					</Button>
 				</Div>
+				{osName !== IOS &&
 				<Div className="downloadButton">
 					<Button size="m" level="2" onClick={donation}>
 						Ссылочка на донат
 					</Button>
-				</Div>
+				</Div>}
 			</Panel>
 		)
 	}
