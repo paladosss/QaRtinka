@@ -123,6 +123,7 @@ class Home extends React.Component {
 					          value={text}
 					          onChange={(e) => changeParams(e, 'text')}
 					          rows={1}
+					          maxLength={110}
 					/>
 				</Div>
 				
