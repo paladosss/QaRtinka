@@ -29,8 +29,8 @@ class Home extends React.Component {
 		this.state = {
 			qrImage: jobs,
 			qrImageNew: '',
-			qrText:`Steven Paul «Steve» Jobs - Apple`,
-			inputText:`Steven Paul «Steve» Jobs - Apple`,
+			qrText: `Steven Paul «Steve» Jobs - Apple`,
+			inputText: `Steven Paul «Steve» Jobs - Apple`,
 			qrParams: {
 				correctLevel: 3,
 				dotScale: 0.4,
@@ -70,7 +70,7 @@ class Home extends React.Component {
 	
 	updateImage = (img) => {
 		if (this.state.qrImageNew !== img) {
-			db(this.setState({qrImageNew: img}), 1000);
+			this.setState({qrImageNew: img});
 		}
 	};
 	
@@ -78,7 +78,7 @@ class Home extends React.Component {
 		let reader = new FileReader();
 		
 		reader.onloadend = () => {
-			db(this.setState({qrImage: reader.result}), 1000);
+			this.setState({qrImage: reader.result});
 		};
 		
 		reader.readAsDataURL(e.target.files[0]);
@@ -102,7 +102,7 @@ class Home extends React.Component {
 	donation = () => {
 		const donationLink = 'https://vk.com/vkpay#action=transfer-to-user&user_id=34158861&from_qr=1';
 		
-		this.setState({qrText: donationLink});
+		this.setState({qrText: donationLink, inputText: donationLink});
 	};
 	
 	render() {
