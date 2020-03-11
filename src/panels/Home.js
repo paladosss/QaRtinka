@@ -164,7 +164,7 @@ class Home extends React.Component {
 				{osName !== IOS &&
 				<Div className="downloadButton">
 					<Button size="m" level="2" onClick={this.donation}>
-						Ссылочка на донат
+						Поддержать проект
 					</Button>
 				</Div>}
 			</Panel>
