@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/QaRtinka/static/css/main.237db0f6.chunk.css",
-    "main.js": "/QaRtinka/static/js/main.f11751ed.chunk.js",
-    "main.js.map": "/QaRtinka/static/js/main.f11751ed.chunk.js.map",
+    "main.js": "/QaRtinka/static/js/main.7da93201.chunk.js",
+    "main.js.map": "/QaRtinka/static/js/main.7da93201.chunk.js.map",
     "runtime-main.js": "/QaRtinka/static/js/runtime-main.5cf62566.js",
     "runtime-main.js.map": "/QaRtinka/static/js/runtime-main.5cf62566.js.map",
     "static/css/2.3e9c613c.chunk.css": "/QaRtinka/static/css/2.3e9c613c.chunk.css",
     "static/js/2.093b7089.chunk.js": "/QaRtinka/static/js/2.093b7089.chunk.js",
     "static/js/2.093b7089.chunk.js.map": "/QaRtinka/static/js/2.093b7089.chunk.js.map",
     "index.html": "/QaRtinka/index.html",
-    "precache-manifest.5686617f08beeb9658220993fbb9902d.js": "/QaRtinka/precache-manifest.5686617f08beeb9658220993fbb9902d.js",
+    "precache-manifest.4a4018dab7a81809725591a802e411ca.js": "/QaRtinka/precache-manifest.4a4018dab7a81809725591a802e411ca.js",
     "service-worker.js": "/QaRtinka/service-worker.js",
     "static/css/2.3e9c613c.chunk.css.map": "/QaRtinka/static/css/2.3e9c613c.chunk.css.map",
     "static/css/main.237db0f6.chunk.css.map": "/QaRtinka/static/css/main.237db0f6.chunk.css.map",
@@ -21,6 +21,6 @@
     "static/css/2.3e9c613c.chunk.css",
     "static/js/2.093b7089.chunk.js",
     "static/css/main.237db0f6.chunk.css",
-    "static/js/main.f11751ed.chunk.js"
+    "static/js/main.7da93201.chunk.js"
   ]
 }

@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "86b9a2a863f3aa0300750e173811d276",
+    "revision": "6cc1f2d09ff2b5ef787dc69a24f76e2a",
     "url": "/QaRtinka/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/QaRtinka/static/css/2.3e9c613c.chunk.css"
   },
   {
-    "revision": "90cc33085e8fdfc7b4d8",
+    "revision": "904cdb3c21518c2f2818",
     "url": "/QaRtinka/static/css/main.237db0f6.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/QaRtinka/static/js/2.093b7089.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "90cc33085e8fdfc7b4d8",
-    "url": "/QaRtinka/static/js/main.f11751ed.chunk.js"
+    "revision": "904cdb3c21518c2f2818",
+    "url": "/QaRtinka/static/js/main.7da93201.chunk.js"
   },
   {
     "revision": "b96f868fddacd7f9154b",
