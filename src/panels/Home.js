@@ -57,6 +57,12 @@ class Home extends React.Component {
 		this.changeText = db(this.changeText, 3000);
 	}
 	
+	// componentWillReceiveProps(nextProps, nextContext) {
+	// 	if (nextProps.codeReader.code_data) {
+	// 		console.log(nextProps.codeReader.code_data);
+	// 	}
+	// }
+	
 	handleChangeText = (e) => {
 		const {value} = e.target;
 		
@@ -122,7 +128,6 @@ class Home extends React.Component {
 					          placeholder="Введите текст, который будет зашифрован в QR-коде"
 					          value={inputText}
 					          onChange={this.handleChangeText}
-					          rows={1}
 					          maxLength={110}
 					/>
 				</Div>
@@ -161,6 +166,7 @@ class Home extends React.Component {
 						Скачать QR-код
 					</Button>
 				</Div>
+				
 				{osName !== IOS &&
 				<Div className="downloadButton">
 					<Button size="m" level="2" onClick={this.donation}>
@@ -183,6 +189,7 @@ Home.propTypes = {
 			title: PropTypes.string,
 		}),
 	}),
+	codeReader: PropTypes.object,
 };
 
 export default Home;

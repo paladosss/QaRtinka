@@ -9,7 +9,7 @@ import Home from './panels/Home';
 
 const App = () => {
 	const [activePanel, setActivePanel] = useState('home');
-	const [fetchedUser, setUser] = useState(null);
+	const [fetchedUser, setUser, codeReader] = useState(null);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large'/>);
 	
 	useEffect(() => {
@@ -19,6 +19,17 @@ const App = () => {
 				schemeAttribute.value = data.scheme ? data.scheme : 'client_light';
 				document.body.attributes.setNamedItem(schemeAttribute);
 			}
+			
+			// if (type === 'VKWebAppOpenCodeReaderResult') {
+			// 	console.log(data.code_data);
+			// 	codeReader.code_data = data.code_data;
+			// }
+			//
+			// if (type === 'VKWebAppOpenCodeReaderFailed') {
+			// 	console.log(data.error_type, data.error_data);
+			// 	codeReader.error_type = data.error_type;
+			// 	codeReader.error_data = data.error_data;
+			// }
 		});
 		
 		async function fetchData() {
@@ -38,7 +49,7 @@ const App = () => {
 		<View activePanel={activePanel}
 			// popout={popout}
 		>
-			<Home id='home' fetchedUser={fetchedUser} go={go}/>
+			<Home id='home' fetchedUser={fetchedUser} go={go} codeReader={codeReader}/>
 		</View>
 	);
 };
