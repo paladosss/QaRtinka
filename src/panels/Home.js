@@ -17,7 +17,8 @@ import './Home.css'
 
 const osName = platform();
 const jobs = require('../img/jobs.jpg');
-const db = require('just-debounce');
+// const db = require('just-debounce');
+const db = require('debounce');
 
 // const FileSaver = require('file-saver');
 
@@ -28,8 +29,9 @@ class Home extends React.Component {
 		this.state = {
 			qrImage: jobs,
 			qrImageNew: '',
+			qrText:`Steven Paul «Steve» Jobs - Apple`,
+			inputText:`Steven Paul «Steve» Jobs - Apple`,
 			qrParams: {
-				text: `Steven Paul «Steve» Jobs - Apple`,
 				correctLevel: 3,
 				dotScale: 0.4,
 				size: 1000,
@@ -51,63 +53,61 @@ class Home extends React.Component {
 		};
 	}
 	
+	componentDidMount() {
+		this.changeText = db(this.changeText, 3000);
+	}
+	
+	handleChangeText = (e) => {
+		const {value} = e.target;
+		
+		this.setState({inputText: value.length ? value : ''});
+		this.changeText(value);
+	};
+	
+	changeText = (text) => {
+		this.setState({qrText: text.length ? text : ''});
+	};
+	
+	updateImage = (img) => {
+		if (this.state.qrImageNew !== img) {
+			db(this.setState({qrImageNew: img}), 1000);
+		}
+	};
+	
+	uploadFile = (e) => {
+		let reader = new FileReader();
+		
+		reader.onloadend = () => {
+			db(this.setState({qrImage: reader.result}), 1000);
+		};
+		
+		reader.readAsDataURL(e.target.files[0]);
+	};
+	
+	downloadImage = () => {
+		const {qrImageNew} = this.state;
+		
+		bridge.send("VKWebAppShowStoryBox", {
+			"background_type": "image",
+			"blob": "data:image/png;base64,<blob-base64>" + qrImageNew,
+		});
+		
+		// FileSaver.saveAs(qrImageNew, "qr.png", {autoBom: true});
+	};
+	
+	openCodeReader = () => {
+		bridge.send("VKWebAppOpenCodeReader", {});
+	};
+	
+	donation = () => {
+		const donationLink = 'https://vk.com/vkpay#action=transfer-to-user&user_id=34158861&from_qr=1';
+		
+		this.setState({qrText: donationLink});
+	};
+	
 	render() {
 		const {id} = this.props;
-		let {qrImage, qrImageNew, qrParams} = this.state;
-		const {text} = qrParams;
-		
-		const changeParams = (e, key) => {
-			let value;
-			if (e.target) {
-				const newValue = e.target.value;
-				value = newValue.length ? newValue : '';
-			} else if (e) {
-				value = e;
-			}
-			
-			db(this.setState(state => {
-				const qrParams = {...state.qrParams};
-				
-				qrParams[key] = value;
-				
-				return {qrParams};
-			}), 1000);
-		};
-		
-		const updateImage = (img) => {
-			if (qrImageNew !== img) {
-				db(this.setState({qrImageNew: img}), 1000);
-			}
-		};
-		
-		const uploadFile = (e) => {
-			let reader = new FileReader();
-			
-			reader.onloadend = () => {
-				db(this.setState({qrImage: reader.result}), 1000);
-			};
-			
-			reader.readAsDataURL(e.target.files[0]);
-		};
-		
-		const downloadImage = () => {
-			bridge.send("VKWebAppShowStoryBox", {
-				"background_type": "image",
-				"blob": "data:image/png;base64,<blob-base64>" + qrImageNew,
-			});
-			
-			// FileSaver.saveAs(qrImageNew, "qr.png", {autoBom: true});
-		};
-		
-		const openCodeReader = () => {
-			bridge.send("VKWebAppOpenCodeReader", {});
-		};
-		
-		const donation = () => {
-			const donationLink = 'https://vk.com/vkpay#action=transfer-to-user&user_id=34158861&from_qr=1';
-			
-			changeParams(donationLink, 'text');
-		};
+		let {qrImage, qrParams, qrText, inputText} = this.state;
 		
 		return (
 			<Panel id={id} className="Home">
@@ -120,8 +120,8 @@ class Home extends React.Component {
 					<Textarea type="text"
 					          top="Введите текст, который будет зашифрован в QR-коде"
 					          placeholder="Введите текст, который будет зашифрован в QR-коде"
-					          value={text}
-					          onChange={(e) => changeParams(e, 'text')}
+					          value={inputText}
+					          onChange={this.handleChangeText}
 					          rows={1}
 					          maxLength={110}
 					/>
@@ -134,8 +134,9 @@ class Home extends React.Component {
 					</Div>
 					<Div className="qr">
 						<ReactQr className="qrImg"
+						         text={qrText}
 						         bgSrc={qrImage}
-						         callback={img => updateImage(img)}
+						         callback={img => this.updateImage(img)}
 						         {...qrParams}
 						/>
 					</Div>
@@ -143,26 +144,26 @@ class Home extends React.Component {
 				
 				<Div className="downloadButton">
 					<File top="Загрузите ваше изображение" before={<Icon24Camera/>}
-					      size="l" onChange={uploadFile}>
+					      size="l" onChange={this.uploadFile}>
 						Загрузить своё изображение
 					</File>
 				</Div>
 				<Div className="downloadButton">
-					<Button size="m" level="2" onClick={openCodeReader}>
+					<Button size="m" level="2" onClick={this.openCodeReader}>
 						Сканировать QR-код
 					</Button>
 				
 				</Div>
 				
 				<Div className="downloadButton">
-					<Button size="m" level="2" onClick={downloadImage}
+					<Button size="m" level="2" onClick={this.downloadImage}
 					        before={<Icon24Document/>}>
 						Скачать QR-код
 					</Button>
 				</Div>
 				{osName !== IOS &&
 				<Div className="downloadButton">
-					<Button size="m" level="2" onClick={donation}>
+					<Button size="m" level="2" onClick={this.donation}>
 						Ссылочка на донат
 					</Button>
 				</Div>}
